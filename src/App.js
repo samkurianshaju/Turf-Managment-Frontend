@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Components/Header";
+//import Header from "./Components/Header";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 import MyBookings from "./Components/MyBookings";
 import Support from "./Components/Support";
 import BookNow from "./Components/BookNow";
@@ -11,9 +11,7 @@ import Users from "./Components/User/Users";
 function App() {
   return (
   <React.Fragment>
-    <Header>
-      <Header />
-    </Header>
+  
     <main>
       <Routes>
         <Route path="/" element={<Home />} exact/>
@@ -27,5 +25,4 @@ function App() {
     </React.Fragment>
   );
 }
-
 export default App;
