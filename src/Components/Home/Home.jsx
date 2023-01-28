@@ -6,6 +6,7 @@ import Header from '../Header';
 import "./Home.css" ;
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="home">
       <div className='frmhome'>
@@ -14,11 +15,8 @@ const Home = () => {
             <TextField margin="normal" fullWidth variant='outlined' name='email' id="email" label="Email"/>
             <TextField margin="normal" fullWidth variant='outlined' name='password' id="password" label="Password"/>
             <Button variant='contained' type='Submit'>Login</Button>
-            <Button variant='contained' type='Submit'>Sign Up</Button>
-            <Link className="btn1" to={{ pathname: "/createaccount" }}>Forgot Password</Link>
-            <Link to="/createaccount">
-              <button>Sign Up</button>
-           </Link>
+            <Button variant='contained' onClick={() => navigate("/createaccount")}>Sign Up</Button>
+            <Link className="btn1" to={{ pathname: "/forgotpassword" }}>Forgot Password</Link>
           </Box>
         </form>
       </div>
