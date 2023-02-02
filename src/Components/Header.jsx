@@ -1,36 +1,60 @@
 import React, { useState } from 'react';
-import { AppBar, Tab, Tabs, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer'; //Used to bring soccer Icon
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import {NavLink} from 'react-router-dom'; //used to include navigation links
-
+//import {NavLink} from 'react-router-dom'; //used to include navigation links
+import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Header = () => {
-  const [value,setValue] = useState();
+  const isLoggedIn =useSelector((state)=>state.isLoggedIn);
+  const [value, setValue] = useState()
   return( //Displays soccer icon | T
-    <div>
-      <AppBar sx={{backgroundColor:"#000c69"}} position="sticky">  
+      <AppBar 
+        position="sticky"
+        sx={{
+          background:
+          "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,68,182,1) 50%, rgba(0,212,255,1) 100%);//cssgradient"}}>  
         <Toolbar>
-         <Typography>
-          <SportsSoccerIcon /> 
-         </Typography>
-          <Tabs 
-            sx={{ml:'auto'}}
-            textColor='inherit' 
-            indicatorColor='secondary' 
-            value={value} 
-            onChange={(e,val)=>setValue(val)/*To change underline on tabs*/}>
-             <Tab LinkComponent={NavLink} to="/createaccount" label="Create Account"/>
-             <Tab LinkComponent={NavLink} to="/booknow" label="Book Now"/>  
-             <Tab LinkComponent={NavLink} to="/users" label="Users"/>
-             <Tab LinkComponent={NavLink} to="/mybookings" label="My Bookings"/>
-             <Tab LinkComponent={NavLink} to="/support" label="Support"/>                       
-          </Tabs>
-          <Typography>
-          <FitnessCenterIcon/> 
-         </Typography>
+          <Typography><SportsSoccerIcon /></Typography>
+          <Typography variant="h4"> Moosa's Turf  </Typography>
+          <Typography><FitnessCenterIcon/></Typography>
+          { isLoggedIn && <Box dispaly="flex" marginLeft={'auto'} marginRight={'auto'}>
+            <Tabs 
+              textColor="inherit" 
+              value={value}
+              onChange={(e, val)=>setValue(val)}>
+              <Tab LinkComponent={Link} 
+                to="/mybookings" 
+                label="My Bookings" />
+              <Tab LinkComponent={Link} 
+              to="book/add" 
+              label="Book Now"  />
+            </Tabs>
+          </Box>}
+
+          <Box 
+            display="flex" 
+            marginLeft={'auto'}>
+            {!isLoggedIn && <><Button 
+              LinkComponent={Link} 
+              to="/login" variant="contained" 
+              sx={{margin:1,borderRadius:10}}>Login
+            </Button>
+            <Button 
+            LinkComponent={Link} 
+              to="/login" variant="contained" 
+              sx={{margin:1,borderRadius:10}} >SignUp
+            </Button></>
+            }
+            { isLoggedIn &&(<Button LinkComponent={Link} 
+              to="/login" variant="contained" 
+              sx={{margin:1,borderRadius:10}} 
+              color="warning">Log Out</Button>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
-    </div>
   );
   };
-export default Header
+export default Header;
