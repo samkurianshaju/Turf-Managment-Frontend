@@ -10,14 +10,18 @@ const TodayBookings = () => {
     return data;
   }
     useEffect(() => {
-     sendRequest().then(data=>settodaybook(data.todaybook));
+     sendRequest().then(data => settodaybook(data.bookings));
     },[])
-    console.log(todaybook)
+    console.log(todaybook);
   return (
   <div>
-    {//todaybook && todaybook.map((todaybook, index) => <Todaybooks />)
-    }<Todaybooks />
+    {todaybook && todaybook.map((todaybook, index) => 
+    <Todaybooks 
+      bookingDate={todaybook.bookingDate} 
+      start_time={todaybook.start_time} 
+      end_time={todaybook.end_time} 
+      name={todaybook.user.name}  />)}
     </div>
-  )
-}
+  );
+};
 export default TodayBookings
