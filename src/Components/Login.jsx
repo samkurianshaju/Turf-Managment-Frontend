@@ -2,8 +2,13 @@ import { Button, inputClasses, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import axios from 'axios'
+import {useDispatch} from "react-redux"
+import { authActions } from '../store'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispath = useDispatch();
   const [inputs, setinputs] = useState({
     name:"",
     age:"",
@@ -19,8 +24,12 @@ const Login = () => {
     }));
   };
 
-  const sendRequest = async ()=>{
-    const res = await axios.post("http://localhost:5000/api/user/login",{
+  const sendRequest = async (type="login")=>{
+    const res = await axios
+    .post(`http://localhost:5000/api/user/${type}`,{
+      name:inputs.name,
+      age:inputs.age,
+      phone:inputs.phone,
       email:inputs.email,
       password:inputs.password
     }).catch(err=>console.log(err));
@@ -32,7 +41,17 @@ const Login = () => {
   const handleSubmit = (e)=>{
     e.preventDefault()
     console.log(inputs);
-    sendRequest();
+    if(isSignUp){
+      sendRequest("signup")
+      .then(()=>dispath(authActions.login())).
+      then(()=>navigate("/todaybookings"))
+      .then(data=>console.log(data))
+    } else {
+      sendRequest()
+      .then(()=>dispath(authActions.login()))
+      .then(()=>navigate("/todaybookings"))
+      .then(data=>console.log(data))
+    }
   }
   return (
     <div>
@@ -48,25 +67,54 @@ const Login = () => {
           margin='auto'
           marginTop={10}
           borderRadius={55}
+          backgroundColor='#d4d4d4'
         >
-          <Typography variant='h3'>{isSignUp ? "SignUp" : "Login"}</Typography>
+          <Typography variant='h3' 
+          c olor={'#1244d9'}>{isSignUp ? "SignUp" : "Login"}
+          </Typography>
       {isSignUp && <>
-           <TextField name='name' onChange={handleChange}
-             value={inputs.name} placeholder='Name' margin='normal'/>
-           <TextField name='age' onChange={handleChange}
-             value={inputs.age}  placeholder='Age' margin='normal'/>
-           <TextField name='phone' onChange={handleChange}
-             value={inputs.phone}  placeholder='Phone' margin='normal'/></>
+           <TextField 
+              name='name' 
+              onChange={handleChange}
+              value={inputs.name} 
+              placeholder='Name' 
+              margin='normal'/>
+           <TextField 
+              name='age' 
+              onChange={handleChange}
+              value={inputs.age}  
+              placeholder='Age' 
+              margin='normal'/>
+           <TextField 
+              name='phone' 
+              onChange={handleChange}
+              value={inputs.phone}  
+              placeholder='Phone' 
+              margin='normal'/></>
       }
-          <TextField name="email" onChange={handleChange}
-            value={inputs.email} type={'email'} placeholder='Email' margin='normal'/>
-          <TextField name="password" onChange={handleChange}
-            value={inputs.password} type={'password'} placeholder='Password' margin='normal'/>
-          <Button type='submit'
-            variant='contained' sx={{borderRadius:3,marginTop:2}} color="warning">
-            Submit
+          <TextField 
+              name="email" 
+              onChange={handleChange}
+              value={inputs.email} 
+              type={'email'} 
+              placeholder='Email' 
+              margin='normal'/>
+          <TextField 
+              name="password" 
+              onChange={handleChange}
+              value={inputs.password} 
+              type={'password'} 
+              placeholder='Password' 
+              margin='normal'/>
+          <Button 
+            type='submit'
+            variant='contained' 
+            sx={{borderRadius:3,marginTop:2}} 
+            color="warning">
+             Submit
           </Button>
-          <Button onClick={()=>setisSignUp(!isSignUp)}
+          <Button 
+            onClick={()=>setisSignUp(!isSignUp)}
             sx={{borderRadius:3,marginTop:2}}>
              Switch to {isSignUp ? "Login" : "SignUp"}
             </Button>

@@ -5,8 +5,10 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 //import {NavLink} from 'react-router-dom'; //used to include navigation links
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../store';
 const Header = () => {
+  const dispath=useDispatch();
   const isLoggedIn =useSelector((state)=>state.isLoggedIn);
   const [value, setValue] = useState()
   return( //Displays soccer icon | T
@@ -28,6 +30,9 @@ const Header = () => {
                 to="/mybookings" 
                 label="My Bookings" />
               <Tab LinkComponent={Link} 
+                to="/todaybookings" 
+                label="Today's Booking" />
+              <Tab LinkComponent={Link} 
               to="book/add" 
               label="Book Now"  />
             </Tabs>
@@ -47,7 +52,10 @@ const Header = () => {
               sx={{margin:1,borderRadius:10}} >SignUp
             </Button></>
             }
-            { isLoggedIn &&(<Button LinkComponent={Link} 
+            { isLoggedIn &&(
+            <Button 
+              onClick={()=>dispath(authActions.logout())}
+              LinkComponent={Link} 
               to="/login" variant="contained" 
               sx={{margin:1,borderRadius:10}} 
               color="warning">Log Out</Button>
