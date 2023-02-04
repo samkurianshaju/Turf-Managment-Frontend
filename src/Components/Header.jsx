@@ -19,7 +19,7 @@ const Header = () => {
           "radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(86,68,182,1) 50%, rgba(0,212,255,1) 100%);//cssgradient"}}>  
         <Toolbar>
           <Typography><SportsSoccerIcon /></Typography>
-          <Typography variant="h4"> Moosa's Turf  </Typography>
+          <Typography variant="h4"> Chimbees's Turf  </Typography>
           <Typography><FitnessCenterIcon/></Typography>
           { isLoggedIn && <Box dispaly="flex" marginLeft={'auto'} marginRight={'auto'}>
             <Tabs 

@@ -34,7 +34,8 @@ const Login = () => {
       password:inputs.password
     }).catch(err=>console.log(err));
 
-    const data = res.data;
+    const data = await res.data;
+    console.log(data);
     return data;
   }
 
@@ -43,14 +44,17 @@ const Login = () => {
     console.log(inputs);
     if(isSignUp){
       sendRequest("signup")
-      .then(()=>dispath(authActions.login())).
-      then(()=>navigate("/todaybookings"))
-      .then(data=>console.log(data))
-    } else {
-      sendRequest()
+      //.then((data) => localStorage.setItem("userId",data.user._id))
       .then(()=>dispath(authActions.login()))
       .then(()=>navigate("/todaybookings"))
       .then(data=>console.log(data))
+    } else {
+      sendRequest()
+      .then(data=>console.log(data))
+      //.then((data) => localStorage.setItem("userId",data.user._id))
+      .then(()=>dispath(authActions.login()))
+      .then(()=>navigate("/todaybookings"))
+      //.then(data=>console.log(data))
     }
   }
   return (
@@ -74,18 +78,21 @@ const Login = () => {
           </Typography>
       {isSignUp && <>
            <TextField 
+              required
               name='name' 
               onChange={handleChange}
               value={inputs.name} 
               placeholder='Name' 
               margin='normal'/>
            <TextField 
+              required
               name='age' 
               onChange={handleChange}
               value={inputs.age}  
               placeholder='Age' 
               margin='normal'/>
            <TextField 
+              required
               name='phone' 
               onChange={handleChange}
               value={inputs.phone}  
@@ -93,6 +100,7 @@ const Login = () => {
               margin='normal'/></>
       }
           <TextField 
+              required
               name="email" 
               onChange={handleChange}
               value={inputs.email} 
@@ -100,6 +108,7 @@ const Login = () => {
               placeholder='Email' 
               margin='normal'/>
           <TextField 
+              required
               name="password" 
               onChange={handleChange}
               value={inputs.password} 

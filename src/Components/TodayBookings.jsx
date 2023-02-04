@@ -20,7 +20,8 @@ const TodayBookings = () => {
       bookingDate={todaybook.bookingDate} 
       start_time={todaybook.start_time} 
       end_time={todaybook.end_time} 
-      name={todaybook.user.name}  />)}
+      name={todaybook.user.name}/>
+    )}
     </div>
   );
 };
